@@ -1,0 +1,17 @@
+{
+  "name": "vanillablog",
+  "version": "1.0.0",
+  "description": "My blog made from scratch.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "keywords": [],
+  "author": "Crystel Abou-Nahed",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.1",
+    "nodemon": "^3.1.7"
+  }
+}
