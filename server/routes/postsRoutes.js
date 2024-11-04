@@ -49,13 +49,14 @@ router.get("/:slug", (req, res) => {
                             <p class="date"><em>${post.date}</em></p>
                         </div>
                         <ul class="tags tags-posts">
-                            ${post.tags.map(tag => `<li><a id="${tag}">#${tag}</a></li>`).join('')}
-                        </ul>
+                  ${post.tags.map(tag => `<li><a href="/posts?tag=${tag}">#${tag}</a></li>`).join('')}
+                </ul>
                         <hr>
                         <br>
                         <p>${contentHtml}</p>
                     </main>
                     <script src="/js/top.js"></script>
+                    <script src="/js/posts.js"></script>
                 </body>
                 </html>
             `);

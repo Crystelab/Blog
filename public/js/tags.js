@@ -1,17 +1,21 @@
+const tags = [
+    { name: 'learning', label: '#learning' },
+    { name: 'technical', label: '#technical' },
+    { name: 'meta', label: '#meta' },
+    { name: 'personal', label: '#personal' }
+];
+
 function createTags() {
-    const tagsSection = document.createElement('div'); // Create a container div for the tags
+    const tagsSection = document.createElement('div');
     tagsSection.innerHTML = `
         <br>
         <h3>Explore by tags</h3>
         <ul class="tags">
-            <li><a id="learning">#learning</a></li>
-            <li><a id="technical">#technical</a></li>
-            <li><a id="meta">#meta</a></li>
-            <li><a id="personal">#personal</a></li>
+            ${tags.map(tag => `<li><a href="/posts?tag=${tag.name}">${tag.label}</a></li>`).join('')}
         </ul>
         <br>
     `;
-    document.getElementById('tags').prepend(tagsSection); // Prepend the tags section to the element with id 'tags'
+    document.getElementById('tags').prepend(tagsSection);
 }
 
 document.addEventListener('DOMContentLoaded', createTags);

@@ -1,6 +1,21 @@
 async function createPosts() {
     const postsContainer = document.getElementById('posts');
-  
+    console.log('Posts container:', postsContainer);
+
+    if (!postsContainer) {
+        console.error('Posts container not found');
+        return;
+    }
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const selectedTag = urlParams.get('tag');
+
+    if (selectedTag) {
+        const headerElement = document.createElement('h3');
+        headerElement.textContent = `Posts tagged with "${selectedTag}"`;
+        postsContainer.prepend(headerElement);
+    }
+
     try {
         const response = await fetch('/api/posts');
         if (!response.ok) {
@@ -8,10 +23,11 @@ async function createPosts() {
         }
         const posts = await response.json();
 
-        // Sort posts by date in descending order
         posts.sort((a, b) => new Date(b.date) - new Date(a.date));
-  
-        posts.forEach(post => {
+
+        const filteredPosts = selectedTag ? posts.filter(post => post.tags.includes(selectedTag)) : posts;
+
+        filteredPosts.forEach(post => {
             const postElement = document.createElement('article');
             postElement.innerHTML = `
                 <div class="title-date-container">
@@ -20,7 +36,7 @@ async function createPosts() {
                 </div>
                 <p>${post.description}</p>
                 <ul class="tags tags-posts">
-                  ${post.tags.map(tag => `<li><a id="${tag}">#${tag}</a></li>`).join('')}
+                  ${post.tags.map(tag => `<li><a href="/posts?tag=${tag}">#${tag}</a></li>`).join('')}
                 </ul>
                 <br>
             `;
@@ -30,6 +46,6 @@ async function createPosts() {
         console.error("Error fetching posts:", error);
         postsContainer.innerHTML = "<p>Failed to load posts.</p>";
     }
-}  
+}
 
-document.addEventListener('DOMContentLoaded', createPosts);
+window.onload = createPosts;
