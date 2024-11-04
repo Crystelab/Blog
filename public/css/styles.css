@@ -111,7 +111,6 @@ a:hover {
 pre {
     background-color: var(--text-color);
     color: var(--background-color);
-    border: 1px solid #ddd;
     border-radius: 4px;
     padding: 10px;
     overflow: auto;
@@ -123,13 +122,14 @@ code {
     background-color: var(--text-color);
     color: var(--background-color);
     padding: -1px 2px;
-    border-radius: 4px;
 }
 
 .title-date-container {
     display: flex;
     align-items: baseline;
+    justify-content: space-between;
 }
+
 
 .title-list {
     display: block;
@@ -150,11 +150,16 @@ p {
 }
 
 .post-link {
-    color: var(--link-color); /* Define your link color */
-    text-decoration: none; /* Remove underline */
+    color: var(--link-color);
+    text-decoration: none;
 }
 
 .post-link:hover {
-    color: var(--hover-color); /* Change color on hover */
-    text-decoration: underline; /* Optional: underline on hover */
+    color: var(--hover-color);
+    text-decoration: underline;
 }
+
+html {
+    scrollbar-color: var(--main-color) var(--background-color); /* thumb color and track color */
+}
+
