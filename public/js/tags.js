@@ -9,7 +9,7 @@ function createTags() {
     const tagsSection = document.createElement('div');
     tagsSection.innerHTML = `
         <br>
-        <h3>Explore by tags</h3>
+        <h3>Explore by tag</h3>
         <ul class="tags">
             ${tags.map(tag => `<li><a href="/posts?tag=${tag.name}">${tag.label}</a></li>`).join('')}
         </ul>

@@ -1,6 +1,6 @@
 {
-  "name": "vanillablog",
-  "version": "1.0.0",
+  "name": "Blog",
+  "version": "2.0.0",
   "description": "My blog made from scratch.",
   "main": "index.js",
   "scripts": {

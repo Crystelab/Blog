@@ -52,7 +52,6 @@ router.get("/:slug", (req, res) => {
                   ${post.tags.map(tag => `<li><a href="/posts?tag=${tag}">#${tag}</a></li>`).join('')}
                 </ul>
                         <hr>
-                        <br>
                         <p>${contentHtml}</p>
                     </main>
                     <script src="/js/top.js"></script>

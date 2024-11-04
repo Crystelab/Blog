@@ -34,7 +34,7 @@ async function createPosts() {
                     <h2 class="title-list"><a href="/posts/${post.slug}">${post.title}</a></h2>
                     <p class="date"><em>${post.date}</em></p>
                 </div>
-                <p>${post.description}</p>
+                <p class="close">${post.description}</p>
                 <ul class="tags tags-posts">
                   ${post.tags.map(tag => `<li><a href="/posts?tag=${tag}">#${tag}</a></li>`).join('')}
                 </ul>
