@@ -32,11 +32,11 @@ h2,h3 {
     text-align: center;
 }
 nav {
-	position: sticky;
-	top: 0;
-	text-align: center;
-	background: var(--background-color);
-    padding: 15px 0 15px 0;
+    position: sticky;
+    top: 0;
+    text-align: center;
+    background: var(--background-color);
+    padding: 15px 0;
     border-bottom: 4px dashed var(--main-color);
     z-index: 1000;
 }
@@ -50,16 +50,16 @@ nav a:not(:last-child) {
 }
 
 .nav-link {
-    text-decoration: none; /* Remove the default underline */
-    color: var(--text-color); /* Set your text color */
+    text-decoration: none;
+    color: var(--text-color);
 }
 
 .nav-link:hover {
-    text-decoration: underline; /* Underline the hovered link */
+    text-decoration: underline;
 }
 
 .active {
-    text-decoration: underline; /* Underline the current page link */
+    text-decoration: underline;
 }
 
 a {
@@ -76,11 +76,18 @@ a:hover {
 .tags {
     list-style-type: none;
     padding: 0;
+    margin: 0;
     display: flex; 
     flex-wrap: wrap;
     gap: 10px;
-    margin: 20px 0;
+    margin-top: -15px;
     justify-content: center;
+}
+
+.tags-posts {
+    opacity: 0.7;
+    font-size: medium;
+    justify-content: left;
 }
 
 .tags li {
@@ -90,11 +97,64 @@ a:hover {
 
 .tags a {
     text-decoration: underline;
-    padding: 8px 12px;
+    padding: 10px 15px 0px 0px;
     display: block;
 }
 
 .tags li:hover {
     text-decoration: underline;
     text-decoration-color: var(--main-color);
+    cursor: pointer;
+}
+
+
+pre {
+    background-color: var(--text-color);
+    color: var(--background-color);
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 10px;
+    overflow: auto;
+    white-space: pre-wrap;
+}
+
+code {
+    font-family: monospace;
+    background-color: var(--text-color);
+    color: var(--background-color);
+    padding: -1px 2px;
+    border-radius: 4px;
+}
+
+.title-date-container {
+    display: flex;
+    align-items: baseline;
+}
+
+.title-list {
+    display: block;
+    opacity: 1;
+    text-align: left;
+    margin-bottom: 0;
+}
+
+.date em{
+    opacity: 0.7;
+    font-style: italic;
+    color: var(--text-color);
+    margin-left: 10px;
+}
+p {
+    margin-top: 6px;
+    margin-bottom: 10px;
+}
+
+.post-link {
+    color: var(--link-color); /* Define your link color */
+    text-decoration: none; /* Remove underline */
+}
+
+.post-link:hover {
+    color: var(--hover-color); /* Change color on hover */
+    text-decoration: underline; /* Optional: underline on hover */
 }

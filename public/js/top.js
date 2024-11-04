@@ -1,12 +1,14 @@
-function createNavbar() {
+/*function createNavbar() {
     const navbar = document.createElement('div');
     navbar.innerHTML = `
+        <head>
+            <link rel="stylesheet" href="path/to/your/styles.css">
+        </head>
         <header>
             <h1>Crystel Abou-Nahed</h1>
             <h2>Software Engineering Student</h2>
         </header>
-
-       <nav>
+        <nav>
             <a href="/" class="nav-link active">Home</a>
             <a href="/posts" class="nav-link">Posts</a>
             <a href="/minigame" class="nav-link">Mini Game</a>
@@ -29,4 +31,4 @@ document.addEventListener('DOMContentLoaded', () => {
             link.classList.remove('active');
         }
     });
-});
+});*/
