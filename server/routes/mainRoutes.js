@@ -1,11 +1,14 @@
 const express = require("express");
 const path = require("path");
-const fs = require("fs");
 
 const router = express.Router();
 
 router.get("^/$|/index(.html)?", (req, res) => {
     res.sendFile(path.join(__dirname, "../../public/index.html"));
+});
+
+router.get("/posts/:slug", (req, res) => {
+    res.sendFile(path.join(__dirname, "../../public/post.html"));
 });
 
 router.get("/posts(.html)?", (req, res) => {
