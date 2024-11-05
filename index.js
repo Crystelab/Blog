@@ -5,8 +5,12 @@ const mainRoutes = require('./server/routes/mainRoutes');
 const postsRoutes = require('./server/routes/postsRoutes');
 const apiRoutes = require("./server/routes/api");
 
+const connectDB = require('./server/data/mongodb')
+
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+connectDB();
 
 app.use(express.static(path.join(__dirname, 'public')));
 

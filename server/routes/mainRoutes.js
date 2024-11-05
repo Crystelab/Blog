@@ -12,7 +12,6 @@ router.get("/posts(.html)?", (req, res) => {
     res.sendFile(path.join(__dirname, "../../public/posts.html"));
 });
 
-
 router.get("/minigame(.html)?", (req, res) => {
     res.sendFile(path.join(__dirname, "../../public/miniGame.html"));
 });
