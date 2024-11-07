@@ -1,2 +1,2 @@
 # Blog
-My blog made from scratch.
+This is the repo of my [website](https://crystelab.com/).
