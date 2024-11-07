@@ -120,6 +120,7 @@ router.post('/connect', async (req, res) => {
     }
   });
 
+  //Edit post
   router.put('/edit-post/:slug', authMiddleware, async (req, res) => {
     try {
         const tagsArray = req.body.tags.split(',').map(tag => tag.trim());
@@ -140,4 +141,14 @@ router.post('/connect', async (req, res) => {
     }
 });
 
+//Delete post
+router.delete('/delete-post/:slug', authMiddleware, async (req, res) => {
+  try {
+      await Post.deleteOne({ slug: req.params.slug });
+      res.redirect('/admin/dashboard');
+  } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: 'Internal server error' });
+  }
+});
 module.exports = router;

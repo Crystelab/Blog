@@ -38,7 +38,7 @@ async function createPost() {
                 <label for="content">Content:</label>
                 <textarea id="content" name="content" required>${post.content}</textarea>
         
-                <input type="submit" value="Update Post" class="btn">
+                <input type="submit" value="Update Post">
           </form>
         `;
     } catch (error) {

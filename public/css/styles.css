@@ -71,26 +71,15 @@ input[type="submit"] {
     cursor: pointer;
     border: none;
     max-width: fit-content;
-    padding: 10px 25px 10px 25px;
+    padding: 10px 25px;
     display: block;
     margin: 0 auto;
 }
 
-input[type="submit"]:hover {
-    background-color: var(--main-color);
-}
-textarea{
-    margin-bottom: 10px;
-}
-
-nav {
-    position: sticky;
-    top: 0;
-    text-align: center;
-    background: var(--background-color);
-    padding: 15px 0;
-    border-bottom: 4px dashed var(--main-color);
-    z-index: 1000;
+input.delete {
+    display: inline;
+    padding: 5px 10px;
+    font-size: small;
 }
 
 nav a {
