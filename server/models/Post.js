@@ -24,12 +24,10 @@ const PostSchema = new Schema({
     required: true
   },
   date: {
-    type: Date,
-    default: Date.now
+    type: Date
   },
   updated: {
-    type: Date,
-    default: Date.now
+    type: Date
   }
 });
 

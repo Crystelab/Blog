@@ -35,7 +35,7 @@ async function createPosts() {
                 <div class="title-date-container">
                     <h2 class="title-list"><a href="/posts/${post.slug}">${post.title}</a></h2>
                     <ul>
-                        <a href="">Edit</a>
+                        <a href="/admin/edit-post/${post.slug}">Edit</a>
                         <a href="">Delete</a>
                     </ul>
                 </div>

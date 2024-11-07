@@ -34,6 +34,12 @@ router.get("^/$|/index(.html)?", (req, res) => {
 router.get("/dashboard(.html)?", authMiddleware, (req, res) => {
     res.sendFile(path.join(__dirname, "../../public/admin/dashboard.html"));
 });
+router.get('/add-post', authMiddleware, async (req, res) => {
+  res.sendFile(path.join(__dirname, "../../public/admin/add-post.html"));
+});
+router.get("/edit-post/:slug", (req, res) => {
+  res.sendFile(path.join(__dirname, "../../public/admin/edit-post.html"));
+});
 
 // Login
 router.post('/connect', async (req, res) => {
@@ -62,7 +68,7 @@ router.post('/connect', async (req, res) => {
 
 
 // Register user
-router.post('/register', async (req, res) => {
+/*router.post('/register', async (req, res) => {
     const { username, password } = req.body;
   
     if (!username || !password) {
@@ -88,6 +94,50 @@ router.post('/register', async (req, res) => {
       console.error(error);
       res.status(500).json({ message: 'Internal server error' });
     }
+  });*/
+
+  //Create post
+  router.post('/add-post', authMiddleware, async (req, res) => {
+    try {
+      try {
+        const newPost = new Post({
+          slug: req.body.slug,
+          title: req.body.title,
+          description: req.body.description,
+          tags: req.body.tags,
+          content: req.body.content,
+          date: Date.now()
+        });
+  
+        await Post.create(newPost);
+        res.redirect('/admin/dashboard');
+      } catch (error) {
+        console.log(error);
+      }
+  
+    } catch (error) {
+      console.log(error);
+    }
   });
+
+  router.put('/edit-post/:slug', authMiddleware, async (req, res) => {
+    try {
+        const tagsArray = req.body.tags.split(',').map(tag => tag.trim());
+
+        await Post.findOneAndUpdate({ slug: req.params.slug }, {
+            slug: req.body.slug,
+            title: req.body.title,
+            description: req.body.description,
+            tags: tagsArray,
+            content: req.body.content,
+            updatedAt: Date.now()
+        });
+
+        res.redirect(`/admin/dashboard`);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+});
 
 module.exports = router;

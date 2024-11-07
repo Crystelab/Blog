@@ -79,6 +79,9 @@ input[type="submit"] {
 input[type="submit"]:hover {
     background-color: var(--main-color);
 }
+textarea{
+    margin-bottom: 10px;
+}
 
 nav {
     position: sticky;

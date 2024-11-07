@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.ico" />
+    <title>Admin</title>
+    <link rel="stylesheet" href="../css/styles.css" />
+</head>
+<body>
+    <header>
+        <h1>New Post</h1> 
+    </header>
+    <nav>
+        <a href="/admin/dashboard" class="nav-link">Back</a>
+    </nav>
+    <main>
+        <form action="/admin/add-post" method="POST">
+            <label for="slug">Slug:</label>
+            <input type="text" id="slug" name="slug" required>
+        
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" required>
+        
+            <label for="description">Description:</label>
+            <textarea id="description" name="description" required></textarea>
+        
+            <label for="tags">Tags (comma-separated):</label>
+            <input type="text" id="tags" name="tags" placeholder="e.g., tag1, tag2, tag3" required>
+        
+            <label for="content">Content:</label>
+            <textarea id="content" name="content" required></textarea>
+        
+            <input type="submit" value="Submit Post" class="btn">
+          </form>
+        
+    </main>
+</body>
+</html>
