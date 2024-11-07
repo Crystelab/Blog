@@ -151,4 +151,11 @@ router.delete('/delete-post/:slug', authMiddleware, async (req, res) => {
       res.status(500).json({ message: 'Internal server error' });
   }
 });
+
+//Logout
+router.get('/logout', (req, res) => {
+  res.clearCookie('token');
+  res.redirect('/');
+});
+
 module.exports = router;
