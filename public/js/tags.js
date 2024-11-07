@@ -2,7 +2,8 @@ const tags = [
     { name: 'learning', label: '#learning' },
     { name: 'technical', label: '#technical' },
     { name: 'meta', label: '#meta' },
-    { name: 'personal', label: '#personal' }
+    { name: 'personal', label: '#personal' },
+    { name: 'musings', label: '#musings' }
 ];
 
 function createTags() {

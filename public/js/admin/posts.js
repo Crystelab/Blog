@@ -34,7 +34,12 @@ async function createPosts() {
             postElement.innerHTML = `
                 <div class="title-date-container">
                     <h2 class="title-list"><a href="/posts/${post.slug}">${post.title}</a></h2>
-                    <p class="date"><em>${formattedDate}</em></p>
+                    <ul>
+                        <a href="/admin/edit-post/${post.slug}">Edit</a>
+                        <form action="/admin/delete-post/${post.slug}?_method=DELETE" method="POST" style="display:inline;" class="delete-form">
+                            <input type="submit" value="Delete" class="delete">
+                        </form>
+                    </ul>
                 </div>
                 <p class="close">${post.description}</p>
                 <ul class="tags tags-posts">
@@ -44,6 +49,18 @@ async function createPosts() {
             `;
             postsContainer.appendChild(postElement);
         });
+
+        // Add event listeners for delete confirmation
+        const deleteForms = document.querySelectorAll('.delete-form');
+        deleteForms.forEach(form => {
+            form.addEventListener('submit', function(event) {
+                const confirmed = confirm('Are you sure you want to delete this post?');
+                if (!confirmed) {
+                    event.preventDefault();
+                }
+            });
+        });
+
     } catch (error) {
         console.error("Error fetching posts:", error);
         postsContainer.innerHTML = "<p>Failed to load posts.</p>";

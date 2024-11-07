@@ -18,11 +18,12 @@ async function fetchRecentPosts() {
         const recentPosts = posts.slice(0, 3);
 
         recentPosts.forEach(post => {
+            const formattedDate = new Date(post.date).toISOString().split('T')[0];
             const postElement = document.createElement('article');
             postElement.innerHTML = `
                 <div class="title-date-container">
                     <h2 class="title-list"><a href="/posts/${post.slug}">${post.title}</a></h2>
-                    <p class="date"><em>${post.date}</em></p>
+                    <p class="date"><em>${formattedDate}</em></p>
                 </div>
                 <p class="close">${post.description}</p>
                 <ul class="tags tags-posts">
