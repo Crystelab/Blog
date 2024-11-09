@@ -1,0 +1,51 @@
+@import 'styles.css';
+
+.grid {
+width: 470px;
+height: 470px;
+border: 2px solid var(--text-color);
+margin: 0 auto;
+display: flex;
+flex-wrap: wrap;
+}
+
+.grid div {
+width: 20px;
+height: 20px;
+}
+
+.snake {
+background: var(--main-color);
+}
+
+.apple {
+background: darkseagreen;
+border-radius: 20px;
+}
+
+button {
+background-color: var(--behind-color);
+border: 1px solid var(--text-color);
+color: var(--background-color);
+font-size: large;
+padding: 5px 10px;
+border-radius: 5px;
+}
+
+button:hover {
+background-color: var(--main-color);
+cursor: pointer;
+}
+
+.gameOver {
+position: fixed;
+top: 370px;
+left: 710px;
+}
+
+.display {
+    position: fixed;
+    top: 250px;
+    float: left;
+    align-items: left;
+}

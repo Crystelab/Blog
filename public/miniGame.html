@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/svg+xml" href="/assets/favicon.ico" />
     <title>Mini Game</title>
-    <link rel="stylesheet" href="/css/styles.css" />
+    <link rel="stylesheet" href="/css/game.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <header>
-        <h1>Mini Game</h1>
+        <h1>Snake Eats Apple</h1>
         <h2></h2>
     </header>
     <nav>
@@ -21,7 +21,18 @@
         <a href="https://www.linkedin.com/in/crystel-abou-nahed-7216272ab/" class="nav-link">LinkedIn</a>
     </nav>
     <main>
-        <h2><i class="fas fa-tools"></i> Under construction <i class="fas fa-tools"></i></h2>
-    </main>
+        <div class="scoreDisplay"></div>
+        <div class="grid"></div>
+        <div class="display">
+            <p class="displayScore">Score: <span class="score">0</span></p>
+            <p class="displayBest">Best: <span class="best">0</span></p>
+        </div>
+        <div class="gameOver" style="display: none;">
+            <h2>GAME OVER</h2>
+            <h3>Score: <span class="score"></span></h3>
+            <h3>Best: <span class="best"></span></h3>
+            <button class="playAgain">Play Again</button>
+        </div>
+        <script src="/js/snakeEatsApple.js"></script>
 </body>
 </html>
