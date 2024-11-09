@@ -6,6 +6,7 @@
     <link rel="icon" type="image/svg+xml" href="/assets/favicon.ico" />
     <title></title>
     <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <header>
@@ -21,7 +22,11 @@
     </nav>
     <main>
         <div id="post"></div>
+        <hr>
+        <h3 id="bottom"></h3>
+        <h3><a href="#" id="random-post" class="bottomRandom" onclick="fetchRandomPost()">Random Post</a></h3>
     </main>
     <script src="/js/post.js" type="module"></script>
+    <script src="/js/randomPost.js" type="module"></script>
 </body>
 </html>

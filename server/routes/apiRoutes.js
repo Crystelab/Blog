@@ -45,6 +45,32 @@ router.post("/marked", (req, res) => {
     }
 });
 
+// Previous and next post
+router.get('/posts/:slug/adjacent', async (req, res) => {
+    const { slug } = req.params;
+    
+    try {
+        const currentPost = await Post.findOne({ slug });
+        if (!currentPost) {
+            return res.status(404).json({ error: 'Post not found' });
+        }
+
+        // Fetch the previous post
+        const previousPost = await Post.findOne({ date: { $lt: currentPost.date } })
+            .sort({ date: -1 })
+            .exec();
+
+        // Fetch the next post
+        const nextPost = await Post.findOne({ date: { $gt: currentPost.date } })
+            .sort({ date: 1 })
+            .exec();
+
+        res.json({ previous: previousPost, next: nextPost });
+    } catch (error) {
+        console.error('Error fetching adjacent posts:', error);
+        res.status(500).json({ error: 'Server error' });
+    }
+});
 
 module.exports = router;
 

@@ -63,6 +63,19 @@ async function createPost() {
             <br>
             <div class="post-content">${contentHtml}</div> <!-- Insert the converted HTML content -->
         `;
+
+        // Fetch adjacent posts (previous and next)
+        const adjacentResponse = await fetch(`/api/posts/${slug}/adjacent`);
+        if (adjacentResponse.ok) {
+            const { previous, next } = await adjacentResponse.json();
+
+            // Update navigation links
+            const navContainer = document.getElementById("bottom");
+            navContainer.innerHTML = `
+                ${previous ? `<a href="/posts/${previous.slug}"><i class="fa-solid fa-arrow-left"></i></a>` : ''}
+                ${next ? `<a href="/posts/${next.slug}"><i class="fa-solid fa-arrow-right"></i></a>` : ''}
+            `;
+        }
     } catch (error) {
         console.error("Error fetching post:", error);
         postContainer.innerHTML = "<p>Failed to load post.</p>";

@@ -218,17 +218,6 @@ nav a:not(:last-child) {
     text-decoration: underline;
 }
 
-a {
-    color: var(--text-color);
-    text-decoration-thickness: 0.3ex;
-	text-underline-offset: 0.3ex;
-	text-decoration-color: var(--main-color);
-}
-a:hover {
-    color: var(--main-color);
-	text-decoration-color: var(--main-color);
-}
-
 .tags {
     list-style-type: none;
     padding: 0;
@@ -260,9 +249,7 @@ a:hover {
 .tags li:hover {
     text-decoration: underline;
     text-decoration-color: var(--main-color);
-    cursor: pointer;
 }
-
 
 pre {
     background-color: var(--text-color);
@@ -305,3 +292,14 @@ code {
     margin-bottom: 0;
 }
 
+#bottom {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: -80px;
+}
+
+h3 .bottomRandom {
+    position: relative;
+    top: 25px;
+}
