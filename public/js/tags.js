@@ -2,7 +2,7 @@ const tags = [
     { name: 'learning', label: '#learning' },
     { name: 'technical', label: '#technical' },
     { name: 'meta', label: '#meta' },
-    { name: 'personal', label: '#personal' },
+    { name: 'project', label: '#project' },
     { name: 'musings', label: '#musings' }
 ];
 
