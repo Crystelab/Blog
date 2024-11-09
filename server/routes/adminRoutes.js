@@ -37,7 +37,7 @@ router.get("/dashboard(.html)?", authMiddleware, (req, res) => {
 router.get('/add-post', authMiddleware, async (req, res) => {
   res.sendFile(path.join(__dirname, "../../public/admin/add-post.html"));
 });
-router.get("/edit-post/:slug", (req, res) => {
+router.get("/edit-post/:slug", authMiddleware, async (req, res) => {
   res.sendFile(path.join(__dirname, "../../public/admin/edit-post.html"));
 });
 
