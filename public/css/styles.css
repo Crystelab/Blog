@@ -306,3 +306,20 @@ h3 .bottomRandom {
 ::selection {
     background: var(--main-color);
   }
+
+
+/* Game */
+canvas {
+        border: 1px solid var(--main-color);
+        background-color: pink/*(--backgroundcolour-color);*/
+    }
+
+.game {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#bird {
+    display: none;
+}
