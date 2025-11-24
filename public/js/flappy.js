@@ -12,7 +12,8 @@ window.addEventListener('load', function(){
             this.bird = new Bird(this);
             this.floor1 = new Floor(this, 0);
             this.floor2 = new Floor(this, canvas.width);
-            this.spike= new Spike(this, false);
+            this.spike1= new Spike(this, false, this.width, (this.height-50)/2);
+            this.spike2= new Spike(this, true, this.width + 250, -150);
             this.egg= new Egg(this);
             this.input = new InputHandler();
         }
@@ -21,7 +22,8 @@ window.addEventListener('load', function(){
             this.bird.update();
             this.floor1.update();
             this.floor2.update();
-            this.spike.update();
+            this.spike1.update();
+            this.spike2.update();
             this.egg.update();
         }
 
@@ -29,7 +31,8 @@ window.addEventListener('load', function(){
             this.bird.draw(context);
             this.floor1.draw(context);
             this.floor2.draw(context);
-            this.spike.draw(context);
+            this.spike1.draw(context);
+            this.spike2.draw(context);
             this.egg.draw(context);
         }
     }
@@ -99,24 +102,33 @@ class Floor{
 }
 
 class Spike{
-    constructor(game, rotate){
+    constructor(game, rotate, x, y){
         this.game = game;
         this.width = 50;
         this.height = 300;
-        this.x = game.width*1;
-        this.y = (game.height-50)/2;
+        this.x = x;
+        this.y = y;
         this.image = spike;
+        this.rotate = rotate;
     }
 
     update(){
         this.x -= 2;
-        if(this.x == -this.width){
+        if(this.x == -this.game.width){
             this.x = 600;
         }
     }
 
     draw(context){
-        context.drawImage(this.image, 0, 0, this.width, this.height = 100,  this.x, this.y, this.width * 2, this.height * 2);
+        if(this.rotate){
+            context.save();
+            context.translate(this.x + this.width, this.y + this.height);
+            context.rotate(Math.PI);
+            context.drawImage(this.image, 0, 0, this.width, this.height, 0, 0, this.width * 2, this.height * 2);
+            context.restore();
+        } else {
+            context.drawImage(this.image, 0, 0, this.width, this.height, this.x, this.y, this.width * 2, this.height * 2);
+        }
     }
 }
 
