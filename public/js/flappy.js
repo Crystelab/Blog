@@ -19,7 +19,7 @@ window.addEventListener('load', function(){
         }
 
         update(){
-            this.bird.update();
+            this.bird.update(this.input);
             this.floor1.update();
             this.floor2.update();
             this.spike1.update();
@@ -61,9 +61,13 @@ class Bird{
         this.animationFrame = 0;
         this.animationRate = 5;
         this.currentTime = 0
+        this.gravity = 0.05;
+        this.gravitySpeed = 0;
     }
 
-    update(){
+    update(input){
+        this.gravitySpeed += this.gravity;
+        this.y += this.gravitySpeed;
         this.currentTime++;
         if(this.currentTime == this.animationRate){
             this.currentTime = 0;
@@ -71,6 +75,12 @@ class Bird{
             if(this.animationFrame == 8){
                 this.animationFrame = 0;
             }
+        }
+
+        // Jump
+        if(input.space == true){
+            this.gravitySpeed = -3;
+            input.space = false;
         }
     }
 
@@ -156,9 +166,11 @@ class Egg{
 
 class InputHandler{
     constructor(){
-        this.keys = [];
+        this.space = false;
         window.addEventListener('keydown', e => {
-            console.log(e.key);
+            if (e.key === " "){
+                this.space = true;
+            }
         });
     }
 }
