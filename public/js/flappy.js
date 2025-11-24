@@ -12,6 +12,8 @@ window.addEventListener('load', function(){
             this.bird = new Bird(this);
             this.floor1 = new Floor(this, 0);
             this.floor2 = new Floor(this, canvas.width);
+            this.spike= new Spike(this, false);
+            this.egg= new Egg(this);
             this.input = new InputHandler();
         }
 
@@ -19,12 +21,16 @@ window.addEventListener('load', function(){
             this.bird.update();
             this.floor1.update();
             this.floor2.update();
+            this.spike.update();
+            this.egg.update();
         }
 
         draw(context){
             this.bird.draw(context);
             this.floor1.draw(context);
             this.floor2.draw(context);
+            this.spike.draw(context);
+            this.egg.draw(context);
         }
     }
 
@@ -78,26 +84,63 @@ class Floor{
         this.x = x;
         this.y = game.height - this.height;
         this.image = floor;
-        this.animationRate = 2;
-        this.currentTime = 0
     }
 
     update(){
-        this.currentTime++;
-        this.x -= 2;
-        if(this.currentTime == this.animationRate){
-            this.currentTime = 0;
-        }
+        this.x -= 5; // Has to a be multiple of 500
         if(this.x == -this.width){
-            this.x = this.width
+            this.x = this.width;
         }
     }
 
     draw(context){
-        context.drawImage(this.image, 0, 0, this.width, this.height = 100,  this.x, this.y, this.width, this.height);
+        context.drawImage(this.image, 0, 0, this.width, this.height,  this.x, this.y, this.width, this.height);
     }
 }
 
+class Spike{
+    constructor(game, rotate){
+        this.game = game;
+        this.width = 50;
+        this.height = 300;
+        this.x = game.width*1;
+        this.y = (game.height-50)/2;
+        this.image = spike;
+    }
+
+    update(){
+        this.x -= 2;
+        if(this.x == -this.width){
+            this.x = 600;
+        }
+    }
+
+    draw(context){
+        context.drawImage(this.image, 0, 0, this.width, this.height = 100,  this.x, this.y, this.width * 2, this.height * 2);
+    }
+}
+
+class Egg{
+    constructor(game){
+        this.game = game;
+        this.width = 30;
+        this.height = 41;
+        this.x = game.width*1.5;
+        this.y = (game.height-100)/2;
+        this.image = egg;
+    }
+
+    update(){
+        this.x -= 2;
+        if(this.x == -this.width){
+            this.x = 750;
+        }
+    }
+
+    draw(context){
+        context.drawImage(this.image, 0, 0, this.width, this.height = 100,  this.x, this.y, this.width * 1.2, this.height * 1.2);
+    }
+}
 
 class InputHandler{
     constructor(){
