@@ -16,15 +16,46 @@ window.addEventListener('load', function(){
             this.spike2= new Spike(this, true, this.width + 250, -150);
             this.egg= new Egg(this);
             this.input = new InputHandler();
+            this.gameActive = true;
         }
 
+        checkCollision(){
+            const bird = this.bird;
+
+            // Bird vs spikes
+            if (this.intersects(bird, this.spike1) || this.intersects(bird, this.spike2)) {
+                this.gameActive = false;
+            }
+
+            // Bird vs floor and roof
+            if (bird.y + bird.height - 35 > this.height - 100 || bird.y + 50 < 0) {
+                this.gameActive = false;
+            }
+        }
+
+        intersects(bird, spike){
+            const paddingX = 20; // shrink dangerous area horizontally
+            const paddingY = 20; // shrink vertically (optional)
+
+            return (
+                bird.x < spike.x + spike.width - paddingX &&
+                bird.x + bird.width > spike.x + paddingX &&
+                bird.y < spike.y + spike.height - paddingY &&
+                bird.y + bird.height - 35 > spike.y + paddingY
+            );
+        }
+
+
         update(){
-            this.bird.update(this.input);
-            this.floor1.update();
-            this.floor2.update();
-            this.spike1.update();
-            this.spike2.update();
-            this.egg.update();
+            if(this.gameActive == true){
+                this.bird.update(this.input);
+                this.floor1.update();
+                this.floor2.update();
+                this.spike1.update();
+                this.spike2.update();
+                this.egg.update();
+                this.checkCollision();
+            }
         }
 
         draw(context){
@@ -85,7 +116,7 @@ class Bird{
     }
 
     draw(context){
-        context.drawImage(this.image[this.animationFrame], 0, 0, 320, 320,  this.x, this.y, this.width, this.height);
+        context.drawImage(this.image[this.animationFrame], 0, 0, 320, 320, this.x, this.y, this.width, this.height);
     }
 }
 
