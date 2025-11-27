@@ -33,6 +33,8 @@ window.addEventListener('load', function(){
             }
         }
 
+        // For bird and spike intersection
+        // This function was made with the help of AI
         intersects(bird, spike) {
             // Use the ACTUAL drawn dimensions (scaled by 2)
             const spikeWidth = spike.width * 2;
@@ -62,9 +64,9 @@ window.addEventListener('load', function(){
 
             // Check both left and right edges of the bird AND some middle points
             const checkPoints = [
-                bird.x,                          // Left edge
+                bird.x + 5,                          // Left edge
                 bird.x + bird.width / 2,         // Middle
-                bird.x + bird.width              // Right edge
+                bird.x + bird.width - 5             // Right edge
             ];
 
             for (const bx of checkPoints) {
@@ -85,7 +87,7 @@ window.addEventListener('load', function(){
                     const spikePointY = spikeTop + spikeHeight - triangleHeightAtX;
                     
                     // Check if bird's bottom overlaps with the spike
-                    if (bird.y + bird.height > spikePointY) {
+                    if (bird.y + bird.height - 40 > spikePointY) {
                         return true;
                     }
                 } else {
@@ -94,7 +96,7 @@ window.addEventListener('load', function(){
                     const spikePointY = spikeTop + triangleHeightAtX;
                     
                     // Check if bird's top overlaps with the spike
-                    if (bird.y < spikePointY) {
+                    if (bird.y + 30< spikePointY ) {
                         return true;
                     }
                 }
