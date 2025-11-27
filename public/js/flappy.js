@@ -14,7 +14,7 @@ window.addEventListener('load', function(){
             this.floor2 = new Floor(this, canvas.width);
             this.spike1= new Spike(this, false, this.width, (this.height-50)/2);
             this.spike2= new Spike(this, true, this.width + 250, -150);
-            this.egg= new Egg(this);
+            this.egg = new Egg(this);
             this.input = new InputHandler();
             this.gameActive = true;
         }
@@ -33,18 +33,74 @@ window.addEventListener('load', function(){
             }
         }
 
-        intersects(bird, spike){
-            const paddingX = 20; // shrink dangerous area horizontally
-            const paddingY = 20; // shrink vertically (optional)
+        intersects(bird, spike) {
+            // Use the ACTUAL drawn dimensions (scaled by 2)
+            const spikeWidth = spike.width * 2;
+            const spikeHeight = spike.height * 2;
+            const half = spikeWidth / 2; // Center of the triangle base
+            const slope = spikeHeight / half; // How steep the triangle is
 
-            return (
-                bird.x < spike.x + spike.width - paddingX &&
-                bird.x + bird.width > spike.x + paddingX &&
-                bird.y < spike.y + spike.height - paddingY &&
-                bird.y + bird.height - 35 > spike.y + paddingY
-            );
+            // Get the spike's actual position accounting for rotation
+            let spikeLeft, spikeTop;
+            
+            if (spike.rotate) {
+                // Rotated spike: after translate and rotate, position shifts
+                spikeLeft = spike.x - spike.width;
+                spikeTop = spike.y - spike.height;
+            } else {
+                spikeLeft = spike.x;
+                spikeTop = spike.y;
+            }
+
+            // Check if bird is horizontally within spike range
+            const birdRight = bird.x + bird.width;
+            const spikeRight = spikeLeft + spikeWidth;
+            
+            if (birdRight < spikeLeft || bird.x > spikeRight) {
+                return false; // No horizontal overlap, can't collide
+            }
+
+            // Check both left and right edges of the bird AND some middle points
+            const checkPoints = [
+                bird.x,                          // Left edge
+                bird.x + bird.width / 2,         // Middle
+                bird.x + bird.width              // Right edge
+            ];
+
+            for (const bx of checkPoints) {
+                const localX = bx - spikeLeft;
+                if (localX < 0 || localX > spikeWidth) continue;
+
+                // Distance from center of the triangle base
+                const distFromCenter = Math.abs(localX - half);
+                
+                // Calculate how tall the triangle is at this X position
+                // At the center (distFromCenter = 0), height = spikeHeight (the peak)
+                // At the edges (distFromCenter = half), height = 0 (the base)
+                const triangleHeightAtX = spikeHeight - (slope * distFromCenter);
+
+                if (!spike.rotate) {
+                    // UPWARD pointing spike
+                    // Base is at bottom (spikeTop + spikeHeight), peak is at top (spikeTop)
+                    const spikePointY = spikeTop + spikeHeight - triangleHeightAtX;
+                    
+                    // Check if bird's bottom overlaps with the spike
+                    if (bird.y + bird.height > spikePointY) {
+                        return true;
+                    }
+                } else {
+                    // DOWNWARD pointing spike
+                    // Base is at top (spikeTop), peak points down
+                    const spikePointY = spikeTop + triangleHeightAtX;
+                    
+                    // Check if bird's top overlaps with the spike
+                    if (bird.y < spikePointY) {
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
-
 
         update(){
             if(this.gameActive == true){
@@ -69,7 +125,6 @@ window.addEventListener('load', function(){
     }
 
     const game = new Game(canvas.width, canvas.height);
-    console.log(game);
 
     function animate(){
         context.clearRect(0, 0, canvas.width, canvas.height);
