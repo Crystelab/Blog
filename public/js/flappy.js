@@ -17,6 +17,7 @@ window.addEventListener('load', function(){
             this.egg = new Egg(this);
             this.input = new InputHandler();
             this.gameActive = true;
+            this.score = new Score(this);
         }
 
         checkCollision(){
@@ -30,6 +31,14 @@ window.addEventListener('load', function(){
             // Bird vs floor and roof
             if (bird.y + bird.height - 35 > this.height - 100 || bird.y + 50 < 0) {
                 this.gameActive = false;
+            }
+
+            // Bird vs egg
+            if (this.intersects(bird, this.egg)) {
+                if (this.egg.birdCatch == false){
+                    this.score.score++;
+                    this.egg = new Egg(this);
+                }
             }
         }
 
@@ -123,6 +132,7 @@ window.addEventListener('load', function(){
             this.spike1.draw(context);
             this.spike2.draw(context);
             this.egg.draw(context);
+            this.score.draw(context);
         }
     }
 
@@ -238,6 +248,7 @@ class Egg{
         this.x = game.width*1.5;
         this.y = (game.height-100)/2;
         this.image = egg;
+        this.birdCatch = false;
     }
 
     update(){
@@ -249,6 +260,17 @@ class Egg{
 
     draw(context){
         context.drawImage(this.image, 0, 0, this.width, this.height = 100,  this.x, this.y, this.width * 1.2, this.height * 1.2);
+    }
+}
+class Score{
+    constructor(game){
+        this.game = game;
+        this.score = 0;
+    } 
+    draw(context){
+        context.font = "20px mono";
+        context.fillStyle = 'black';
+        context.fillText("Score: " + this.score, this.game.width - 150, 40);
     }
 }
 
