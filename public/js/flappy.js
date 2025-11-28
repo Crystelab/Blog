@@ -9,16 +9,21 @@ window.addEventListener('load', function(){
         constructor(width, height){
             this.width = width;
             this.height = height;
-            this.bird = new Bird(this);
             this.floor1 = new Floor(this, 0);
             this.floor2 = new Floor(this, canvas.width);
+            this.input = new InputHandler();
+            this.topScore = 0;
+            this.endGame = new EndGame(this);
+            this.newGame();
+        }
+        newGame(){
+            this.bird = new Bird(this);
             this.spike1= new Spike(this, false, this.width, (this.height-50)/2);
             this.spike2= new Spike(this, true, this.width + 250, -150);
             this.egg = new Egg(this);
-            this.input = new InputHandler();
             this.gameActive = true;
             this.score = new Score(this);
-        }
+        }  
 
         checkCollision(){
             const bird = this.bird;
@@ -114,7 +119,7 @@ window.addEventListener('load', function(){
         }
 
         update(){
-            if(this.gameActive == true){
+            if(this.gameActive){
                 this.bird.update(this.input);
                 this.floor1.update();
                 this.floor2.update();
@@ -122,6 +127,10 @@ window.addEventListener('load', function(){
                 this.spike2.update();
                 this.egg.update();
                 this.checkCollision();
+            }
+            if (!this.gameActive && this.input.space === true){
+                this.gameActive = true;
+                this.newGame();
             }
         }
 
@@ -133,6 +142,7 @@ window.addEventListener('load', function(){
             this.spike2.draw(context);
             this.egg.draw(context);
             this.score.draw(context);
+            this.endGame.draw(context);
         }
     }
 
@@ -268,9 +278,45 @@ class Score{
         this.score = 0;
     } 
     draw(context){
-        context.font = "20px mono";
+        context.font = "20px monospace";
         context.fillStyle = 'black';
         context.fillText("Score: " + this.score, this.game.width - 150, 40);
+    }
+}
+
+class EndGame{
+    constructor(game){
+        this.game = game;
+    } 
+    draw(context){
+        if (this.game.gameActive === false){
+            //set topScore
+            if (this.game.score.score > this.game.topScore){
+                this.game.topScore = this.game.score.score;
+            }
+
+            // Semi-transparent overlay
+            context.fillStyle = 'rgba(0, 0, 0, 0.7)';
+            context.fillRect(0, 0, this.game.width, this.game.height);
+            
+            // Game Over text
+            context.font = "bold 48px monospace";
+            context.fillStyle = 'white';
+            context.textAlign = 'center';
+            context.fillText("GAME OVER", this.game.width / 2, this.game.height / 2 - 60);
+            
+            // Score display
+            context.font = "36px monospace";
+            context.fillText("Score: " + this.game.score.score, this.game.width / 2, this.game.height / 2);
+            
+            // Top score display
+            context.font = "24px monospace";
+            context.fillText("Top Score: " + this.game.topScore, this.game.width / 2, this.game.height / 2 + 40);
+            
+            // Restart instruction
+            context.font = "20px monospace";
+            context.fillText("Press SPACE to restart", this.game.width / 2, this.game.height / 2 + 100);
+        }
     }
 }
 
