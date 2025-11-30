@@ -246,7 +246,7 @@ class Spike{
 
     update(){
         this.x -= 2;
-        if(this.x == -this.game.width){
+        if(this.x <= -this.game.width){
             this.x = 600;
             this.height = 200 + Math.random() * 200;
         }
@@ -278,7 +278,7 @@ class Egg{
 
     update(){
         this.x -= 3;
-        if(this.x === -this.width){
+        if(this.x <= -this.width){
             this.x = 650;
         }
     }
