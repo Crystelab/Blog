@@ -1,9 +1,9 @@
-// To load
 window.addEventListener('load', function(){
     const canvas = document.getElementById("canvas");
     const context = canvas.getContext('2d');
     canvas.width = 500;
     canvas.height = 500;
+    const spikeDistance = 170;
 
     class Game {
         constructor(width, height){
@@ -18,19 +18,27 @@ window.addEventListener('load', function(){
         }
         newGame(){
             this.bird = new Bird(this);
-            this.spike1= new Spike(this, false, this.width, (this.height-50)/2);
-            this.spike2= new Spike(this, true, this.width + 250, -150);
+            this.listSpike = [];
+            for(let i = 0; i < 6; i++){
+                if(i%2 === 0){
+                    this.listSpike.push(new Spike(this, false, this.width + spikeDistance * i, (this.height-50)/2));
+                }else{
+                    this.listSpike.push(new Spike(this, true, this.width + spikeDistance * i + 50, -150));
+                }
+            }
             this.egg = new Egg(this);
             this.gameActive = true;
             this.score = new Score(this);
-        }  
-
+        } 
+        
         checkCollision(){
             const bird = this.bird;
 
             // Bird vs spikes
-            if (this.intersects(bird, this.spike1) || this.intersects(bird, this.spike2)) {
-                this.gameActive = false;
+            for (const spike of this.listSpike) {
+                if (this.intersects(bird, spike)) {
+                    this.gameActive = false;
+                }
             }
 
             // Bird vs floor and roof
@@ -44,6 +52,10 @@ window.addEventListener('load', function(){
                     this.score.score++;
                     this.egg = new Egg(this);
                 }
+            }
+
+            if (this.gameActive === false){
+                this.endGame.saveTopScore();
             }
         }
 
@@ -123,8 +135,9 @@ window.addEventListener('load', function(){
                 this.bird.update(this.input);
                 this.floor1.update();
                 this.floor2.update();
-                this.spike1.update();
-                this.spike2.update();
+                for (const spike of this.listSpike) {
+                    spike.update();
+                }
                 this.egg.update();
                 this.checkCollision();
             }
@@ -138,8 +151,9 @@ window.addEventListener('load', function(){
             this.bird.draw(context);
             this.floor1.draw(context);
             this.floor2.draw(context);
-            this.spike1.draw(context);
-            this.spike2.draw(context);
+            for (const spike of this.listSpike) {
+                spike.draw(context);
+            }
             this.egg.draw(context);
             this.score.draw(context);
             this.endGame.draw(context);
@@ -223,7 +237,7 @@ class Spike{
     constructor(game, rotate, x, y){
         this.game = game;
         this.width = 50;
-        this.height = 300;
+        this.height = 200 + Math.random() * 200;
         this.x = x;
         this.y = y;
         this.image = spike;
@@ -234,6 +248,7 @@ class Spike{
         this.x -= 2;
         if(this.x == -this.game.width){
             this.x = 600;
+            this.height = 200 + Math.random() * 200;
         }
     }
 
@@ -255,16 +270,16 @@ class Egg{
         this.game = game;
         this.width = 30;
         this.height = 41;
-        this.x = game.width*1.5;
+        this.x = 650;
         this.y = (game.height-100)/2;
         this.image = egg;
         this.birdCatch = false;
     }
 
     update(){
-        this.x -= 2;
-        if(this.x == -this.width){
-            this.x = 750;
+        this.x -= 3;
+        if(this.x === -this.width){
+            this.x = 650;
         }
     }
 
@@ -287,7 +302,25 @@ class Score{
 class EndGame{
     constructor(game){
         this.game = game;
+        this.loadTopScore();
     } 
+
+    // Load top score from browser storage on game start
+    loadTopScore() {
+        const savedScore = localStorage.getItem('flappyBirdTopScore');
+        if (savedScore) {
+            this.game.topScore = parseInt(savedScore);
+        }
+    }
+    
+    // Save top score to browser storage when new high score is achieved
+    saveTopScore() {
+        if (this.game.score.score > this.game.topScore) {
+            this.game.topScore = this.game.score.score;
+            localStorage.setItem('flappyBirdTopScore', this.game.topScore.toString());
+        }
+    }
+
     draw(context){
         if (this.game.gameActive === false){
             //set topScore
