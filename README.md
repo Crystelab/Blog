@@ -6,4 +6,4 @@ This website is made without a frontend framework, so just JavaScript, HTML and 
 
 Express.js is used for the backend.
 
-MongoDB is used as the database.
+MongoDB is used for the database.
