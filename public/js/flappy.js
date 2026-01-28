@@ -3,7 +3,7 @@ window.addEventListener('load', function(){
     const context = canvas.getContext('2d');
     canvas.width = 500;
     canvas.height = 500;
-    const spikeDistance = 170;
+    const spikeDistance = 200;
 
     class Game {
         constructor(width, height){
@@ -74,7 +74,7 @@ window.addEventListener('load', function(){
             if (spike.rotate) {
                 // Rotated spike: after translate and rotate, position shifts
                 spikeLeft = spike.x - spike.width;
-                spikeTop = spike.y - spike.height;
+                spikeTop = spike.y - spike.height - 50;
             } else {
                 spikeLeft = spike.x;
                 spikeTop = spike.y;
@@ -257,7 +257,7 @@ class Spike{
             context.save();
             context.translate(this.x + this.width, this.y + this.height);
             context.rotate(Math.PI);
-            context.drawImage(this.image, 0, 0, this.width, this.height, 0, 0, this.width * 2, this.height * 2);
+            context.drawImage(this.image, 0, 0, this.width, this.height, 0, 0, this.width * 2, this.height * 2 + 100);
             context.restore();
         } else {
             context.drawImage(this.image, 0, 0, this.width, this.height, this.x, this.y, this.width * 2, this.height * 2);
