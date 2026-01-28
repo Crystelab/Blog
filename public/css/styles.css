@@ -307,21 +307,12 @@ h3 .bottomRandom {
     background: var(--main-color);
   }
 
+/* Image */
 .post-content img {
   max-width: 100%;
   height: auto;
   border-radius: 8px; /* Optional: rounded corners */
 }
-
-/* Or set a specific max width */
-.post-content img {
-  max-width: 600px;
-  height: auto;
-  display: block;
-  margin: 20px auto; /* Center the image */
-}
-
-
 /* Game */
 canvas {
         border: 1px solid var(--main-color);
