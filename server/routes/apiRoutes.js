@@ -1,5 +1,6 @@
 const express = require("express");
 const Post = require('../models/Post');
+const Picture = require('../models/Picture');
 const { marked } = require("marked");
 
 const router = express.Router();
@@ -70,6 +71,23 @@ router.get('/posts/:slug/adjacent', async (req, res) => {
         console.error('Error fetching adjacent posts:', error);
         res.status(500).json({ error: 'Server error' });
     }
+});
+
+//Link to image
+router.get('/pictures/:slug/image', async (req, res) => {
+  try {
+    const picture = await Picture.findOne({ slug: req.params.slug });
+    
+    if (!picture) {
+      return res.status(404).send('Image not found');
+    }
+    
+    res.contentType(picture.image.contentType);
+    res.send(picture.image.data);
+  } catch (error) {
+    console.error('Error fetching image:', error);
+    res.status(500).send('Server error');
+  }
 });
 
 module.exports = router;
