@@ -32,7 +32,7 @@ async function createPost() {
                 <label for="description">Description:</label>
                 <textarea id="description" name="description" required>${post.description}</textarea>
             
-                <label for="tags">Tags (comma-separated):</label>
+                <label for="tags">Tags (learning, technical, meta, project, musings):</label>
                 <input type="text" id="tags" name="tags" value="${post.tags}" required>
             
                 <label for="content">Content:</label>
