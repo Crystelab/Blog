@@ -305,8 +305,12 @@ h3 .bottomRandom {
 }
 ::selection {
     background: var(--main-color);
-  }
+}
 
+.largeTextArea{
+    width: 600px;
+    height: 300px;
+}  
 /* Image */
 .post-content img {
   max-width: 100%;

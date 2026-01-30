@@ -36,7 +36,7 @@ async function createPost() {
                 <input type="text" id="tags" name="tags" value="${post.tags}" required>
             
                 <label for="content">Content:</label>
-                <textarea id="content" name="content" required>${post.content}</textarea>
+                <textarea id="content" class="largeTextArea" name="content" required>${post.content}</textarea>
         
                 <input type="submit" value="Update Post">
           </form>
