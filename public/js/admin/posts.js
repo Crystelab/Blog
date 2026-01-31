@@ -28,13 +28,14 @@ async function createPosts() {
         const filteredPosts = selectedTag ? posts.filter(post => post.tags.includes(selectedTag)) : posts;
 
         filteredPosts.forEach(post => {
-            const formattedDate = new Date(post.date).toISOString().split('T')[0];
+            const eyeIcon = post.visible ? 'fa-eye' : 'fa-eye-slash';
 
             const postElement = document.createElement('article');
             postElement.innerHTML = `
                 <div class="title-date-container">
                     <h2 class="title-list"><a href="/posts/${post.slug}">${post.title}</a></h2>
                     <ul>
+                        <button class="visibility-toggle"><i class="fas ${eyeIcon}"></i></button>
                         <a href="/admin/edit-post/${post.slug}">Edit</a>
                         <form action="/admin/delete-post/${post.slug}?_method=DELETE" method="POST" style="display:inline;" class="delete-form">
                             <input type="submit" value="Delete" class="delete">
