@@ -67,13 +67,15 @@ async function createPosts() {
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`);
                 }
-                const data = await response.json();
-                console.log(data);
-                createPosts();
+                const icon = document.querySelector(`button[onclick="changeVisibility('${slug}', ${currentVisibility})"] i`);
+                icon.classList.toggle('fa-eye');
+                icon.classList.toggle('fa-eye-slash');
+                icon.parentElement.setAttribute('onclick', `changeVisibility('${slug}', ${!currentVisibility})`);
             } catch (error) {
                 console.error("Error changing visibility:", error);
             }
         }
+        window.changeVisibility = changeVisibility;
 
         // Add event listeners for delete confirmation
         const deleteForms = document.querySelectorAll('.delete-form');
