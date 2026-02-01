@@ -35,7 +35,9 @@ async function createPosts() {
                 <div class="title-date-container">
                     <h2 class="title-list"><a href="/posts/${post.slug}">${post.title}</a></h2>
                     <ul>
-                        <button class="visibility-toggle"><i class="fas ${eyeIcon}"></i></button>
+                        <button class="visibility-toggle" onclick="changeVisibility('${post.slug}', ${post.visible})">
+                            <i class="fas ${eyeIcon}"></i>
+                        </button>
                         <a href="/admin/edit-post/${post.slug}">Edit</a>
                         <form action="/admin/delete-post/${post.slug}?_method=DELETE" method="POST" style="display:inline;" class="delete-form">
                             <input type="submit" value="Delete" class="delete">
@@ -50,6 +52,28 @@ async function createPosts() {
             `;
             postsContainer.appendChild(postElement);
         });
+
+        async function changeVisibility(slug, currentVisibility) {
+            try {
+                const response = await fetch(`/admin/edit-post/${slug}`, {
+                    method: "PUT",
+                    body: JSON.stringify({
+                        visible: !currentVisibility
+                    }),
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                });
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                const data = await response.json();
+                console.log(data);
+                createPosts();
+            } catch (error) {
+                console.error("Error changing visibility:", error);
+            }
+        }
 
         // Add event listeners for delete confirmation
         const deleteForms = document.querySelectorAll('.delete-form');

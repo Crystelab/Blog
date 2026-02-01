@@ -123,8 +123,18 @@ router.post('/connect', async (req, res) => {
   //Edit post
   router.put('/edit-post/:slug', authMiddleware, async (req, res) => {
     try {
-        const tagsArray = req.body.tags.split(',').map(tag => tag.trim());
+        // If it's just a visibility toggle (JSON request)
+        if (req.headers['content-type'] === 'application/json') {
+            const post = await Post.findOneAndUpdate(
+                { slug: req.params.slug },
+                { $set: { visible: req.body.visible } },
+                { new: true }
+            );
+            return res.json(post);
+        }
 
+        // Otherwise it's a full form edit
+        const tagsArray = req.body.tags.split(',').map(tag => tag.trim());
         await Post.findOneAndUpdate({ slug: req.params.slug }, {
             slug: req.body.slug,
             title: req.body.title,
