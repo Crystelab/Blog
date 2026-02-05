@@ -1,6 +1,5 @@
 async function fetchRecentPosts() {
     const postsContainer = document.getElementById('latest-posts');
-    console.log('Posts container:', postsContainer);
 
     if (!postsContainer) {
         console.error('Posts container not found');

@@ -1,6 +1,5 @@
 async function createPosts() {
     const postsContainer = document.getElementById('posts');
-    console.log('Posts container:', postsContainer);
 
     if (!postsContainer) {
         console.error('Posts container not found');

@@ -1,6 +1,5 @@
 async function createPosts() {
     const postsContainer = document.getElementById('posts');
-    console.log('Posts container:', postsContainer);
 
     if (!postsContainer) {
         console.error('Posts container not found');
@@ -21,10 +20,15 @@ async function createPosts() {
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
-        const posts = await response.json();
+        let posts = await response.json();
 
+        // Only show posts where visible is true
+        posts = posts.filter(post => post.visible);
+
+        // Sort in date
         posts.sort((a, b) => new Date(b.date) - new Date(a.date));
 
+        // Filter by tag
         const filteredPosts = selectedTag ? posts.filter(post => post.tags.includes(selectedTag)) : posts;
 
         filteredPosts.forEach(post => {
