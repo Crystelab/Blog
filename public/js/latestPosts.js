@@ -11,9 +11,15 @@ async function fetchRecentPosts() {
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
-        const posts = await response.json();
+        let posts = await response.json();
 
+        // Only show posts where visible is true
+        posts = posts.filter(post => post.visible);
+
+        // Sort in date
         posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+        // Show only the three latest
         const recentPosts = posts.slice(0, 3);
 
         recentPosts.forEach(post => {
