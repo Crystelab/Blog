@@ -13,25 +13,29 @@ const BLOCKED_IPS = [
 ];
 
 // Log every page visit
-router.use(async (req, res, next) => {
-    // Only log HTML page loads, skip assets if any pass through here
+router.use((req, res, next) => {
+    // Only log HTML page loads
     if (req.method !== "GET") return next();
-    
-    const ip = req.headers["x-forwarded-for"]?.split(",")[0].trim() || req.ip;
 
-    if (!BLOCKED_IPS.includes(ip)) {
-        try {
-            await Visit.create({
-                date: new Date(),
-                path: req.path,
-                ip,
-                userAgent: req.headers["user-agent"],
-                referrer: req.headers["referer"] || req.headers["referrer"] || null,
-            });
-        } catch (error) {
-            console.log(error); // Don't block the page load if logging fails
+    res.on('finish', async () => {
+        if (res.statusCode === 404) return;
+    
+        const ip = req.headers["x-forwarded-for"]?.split(",")[0].trim() || req.ip;
+
+        if (!BLOCKED_IPS.includes(ip)) {
+            try {
+                await Visit.create({
+                    date: new Date(),
+                    path: req.path,
+                    ip,
+                    userAgent: req.headers["user-agent"],
+                    referrer: req.headers["referer"] || req.headers["referrer"] || null,
+                });
+            } catch (error) {
+                console.log(error); // Don't block the page load if logging fails
+            }
         }
-    }
+    })
 
     next();
 });
