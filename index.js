@@ -8,6 +8,7 @@ const methodOverride = require('method-override');
 const mainRoutes = require('./server/routes/mainRoutes');
 const apiRoutes = require("./server/routes/apiRoutes");
 const adminRoutes = require("./server/routes/adminRoutes");
+const visitRoutes = require("./server/routes/visitRoutes");
 
 const connectDB = require('./server/data/mongodb');
 
@@ -29,6 +30,7 @@ app.use('/assets', express.static(path.join(__dirname, 'public/assets')));
 
 app.use('/admin', adminRoutes);
 app.use('/api', apiRoutes);
+app.use('/visits', visitRoutes);
 app.use('/', mainRoutes);
 
 app.listen(PORT, () => {

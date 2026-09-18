@@ -1,7 +1,42 @@
 const express = require("express");
 const path = require("path");
+const Visit = require('../models/Visit');
 
 const router = express.Router();
+
+//Block me
+const BLOCKED_IPS = [
+    "::1",
+    "127.0.0.1"
+];
+
+// Log every page visit
+router.use(async (req, res, next) => {
+    // Only log HTML page loads, skip assets if any pass through here
+    if (req.method !== "GET") return next();
+    
+    const ip = req.headers["x-forwarded-for"]?.split(",")[0].trim() || req.ip;
+
+    if (!BLOCKED_IPS.includes(ip)) {
+        try {
+            await Visit.create({
+                date: new Date(),
+                path: req.path,
+                ip,
+                userAgent: req.headers["user-agent"],
+                referrer: req.headers["referer"] || req.headers["referrer"] || null,
+            });
+        } catch (error) {
+            console.log(error); // Don't block the page load if logging fails
+        }
+    }
+
+    next();
+});
+
+router.get("/{index}{.html}", (req, res) => {
+    res.sendFile(path.join(__dirname, "../../public/index.html"));
+});
 
 router.get("/{index}{.html}", (req, res) => {
     res.sendFile(path.join(__dirname, "../../public/index.html"));
