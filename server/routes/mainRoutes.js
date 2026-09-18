@@ -8,7 +8,7 @@ const router = express.Router();
 const BLOCKED_IPS = [
     "::1",
     "127.0.0.1",
-    "142.169.176.11"
+    process.env.MY_IP
 ];
 
 // Log every page visit
