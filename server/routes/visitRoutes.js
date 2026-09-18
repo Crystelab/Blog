@@ -33,4 +33,9 @@ router.post('/add-visit', async (req, res) => {
     }
 });
 
+// Gets a json for Grafana
+router.get('/visits-export', async (req, res) => {
+    res.json(await Visit.find());
+});
+
 module.exports = router;
